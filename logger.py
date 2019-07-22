@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+import sys
+import io
 import os
 import os.path
 import pathlib
+import traceback
 import logging
 import logging.config
 import logging.handlers
@@ -48,3 +51,11 @@ class logger:
     def critical(self, msg):
         self.getLogger(logging.CRITICAL)
         self.logger.critical(msg)
+
+    def traceback(self):
+        t, v, tb = sys.exc_info()
+        f = io.StringIO()
+        traceback.print_tb(tb, file=f)
+        msg = "type: %s value: %s\ntraceback: %s" % (t, v, f.getvalue())
+        self.error(msg)
+        print('ERROR Traceback: ' + msg, file=sys.stderr)
