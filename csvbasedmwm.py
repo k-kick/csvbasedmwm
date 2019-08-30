@@ -14,7 +14,7 @@ from pynetdicom.sop_class import VerificationSOPClass
 from logger import logger
 
 # config
-configPath = os.path.abspath(os.path.dirname(__file__)) + os.path.sep + "settings.conf"
+configPath = os.path.join(os.path.abspath(os.path.dirname(__file__)), "settings.conf")
 config = configparser.RawConfigParser()
 config.read(configPath, "utf-8")
 address = config.get("server", "address")
@@ -23,7 +23,7 @@ calledAet = config.get("general", "calledAET")
 csvPath = config.get("general", "csvPath")
 p = pathlib.Path(csvPath)
 if not p.is_absolute():
-    csvPath = os.path.abspath(os.path.dirname(__file__)) + os.path.sep + csvPath
+    csvPath = os.path.join(os.path.abspath(os.path.dirname(__file__)), csvPath)
 ignoreCsvHeader = False if "0" == config.get("general", "ignoreCsvHeader") else True
 
 # log

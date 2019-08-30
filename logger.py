@@ -13,7 +13,7 @@ class logger:
     def __init__(self, name, path, rotateWen, lotateCount, encoding = "utf-8"):
         p = pathlib.Path(path)
         if not p.is_absolute():
-            path = os.path.abspath(os.path.dirname(__file__)) + os.path.sep + path
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), path)
         dirPath = os.path.dirname(path)
         if not os.path.isdir(dirPath):
             os.makedirs(dirPath)
