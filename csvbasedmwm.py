@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 import configparser
-import os
-import pathlib
 import csv
 import copy
 import re
-
+from pathlib import Path
 from pydicom import dcmread
 from pydicom.dataset import Dataset
 from pynetdicom import AE, evt
@@ -14,16 +12,16 @@ from pynetdicom.sop_class import VerificationSOPClass
 from logger import logger
 
 # config
-configPath = os.path.join(os.path.abspath(os.path.dirname(__file__)), "settings.conf")
+configPath = Path(Path(__file__).parent.resolve(), "settings.conf")
 config = configparser.RawConfigParser()
 config.read(configPath, "utf-8")
 address = config.get("server", "address")
 port = int(config.get("server", "port"))
 calledAet = config.get("general", "calledAET")
 csvPath = config.get("general", "csvPath")
-p = pathlib.Path(csvPath)
+p = Path(csvPath)
 if not p.is_absolute():
-    csvPath = os.path.join(os.path.abspath(os.path.dirname(__file__)), csvPath)
+    csvPath = Path(Path(__file__).parent.resolve(), csvPath)
 ignoreCsvHeader = False if "0" == config.get("general", "ignoreCsvHeader") else True
 
 # log

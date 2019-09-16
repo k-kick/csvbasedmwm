@@ -1,22 +1,20 @@
 # -*- coding: utf-8 -*-
 import sys
 import io
-import os
-import os.path
-import pathlib
 import traceback
 import logging
 import logging.config
 import logging.handlers
+from pathlib import Path
 
 class logger:
     def __init__(self, name, path, rotateWen, lotateCount, encoding = "utf-8"):
-        p = pathlib.Path(path)
+        p = Path(path)
         if not p.is_absolute():
-            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), path)
-        dirPath = os.path.dirname(path)
-        if not os.path.isdir(dirPath):
-            os.makedirs(dirPath)
+            p = Path(Path(__file__).parent.resolve(), path)
+        dirPath = p.parent
+        if not dirPath.is_dir():
+            dirPath.mkdir(parents=True)
         self.filehandler = logging.handlers.TimedRotatingFileHandler(
             path,
             when = rotateWen,
