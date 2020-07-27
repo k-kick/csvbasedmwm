@@ -16,7 +16,7 @@ class logger:
         if not dirPath.is_dir():
             dirPath.mkdir(parents=True)
         self.filehandler = logging.handlers.TimedRotatingFileHandler(
-            path,
+            str(p),
             when = rotateWen,
             interval = 1,
             backupCount = lotateCount,
